@@ -62,16 +62,13 @@ public class CallCalculator {
         public CallBuilder(double totalMinutesOnCall, NetworkManager networkManager) {
             this.totalMinutesOnCall = totalMinutesOnCall;
             isSameNetwork = networkManager.isSameNetwork();
-            this.networkManager=networkManager;
+            this.networkManager = networkManager;
         }
 
         public CallBuilder setTotalMinutesCalled(int totalMinutesCalled) {
             this.totalMinutesOnCall = totalMinutesCalled;
             return this;
         }
-
-
-
 
 
         public CallBuilder calculateCallPerMinute() {
@@ -85,7 +82,12 @@ public class CallCalculator {
                 callCharges = totalMinutesOnCall * 5;
             }
             //apply VAT
-            taxation = 16 * callCharges / 100;
+            if (totalMinutesOnCall >= 2) {
+                taxation = 16 * callCharges / 100;
+            } else {
+                taxation = 0.0;
+            }
+
             totalCharges = callCharges + taxation;
 
             System.out.println(totalCharges);
